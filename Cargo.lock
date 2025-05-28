@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "message-hub"
+name = "kv-store"
 version = "0.1.0"

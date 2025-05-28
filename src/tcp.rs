@@ -7,7 +7,7 @@ pub fn write_msg(client: &mut TcpStream, msg: &str) -> std::io::Result<()> {
     let len = msg_bytes.len();
     let mut len_bytes = u32::try_from(len)
         .unwrap_or_default()
-        .to_le_bytes()
+        .to_be_bytes()
         .into_iter()
         .collect();
 
@@ -25,7 +25,7 @@ pub fn recieve_message(stream: &mut TcpStream) -> Result<String, String> {
         return Err(String::from("could not read msg size from stream"));
     };
 
-    let msg_size = u32::from_le_bytes(size_bytes);
+    let msg_size = u32::from_be_bytes(size_bytes);
     if msg_size == 0 {
         let _ = stream.shutdown(Shutdown::Both);
         return Err(String::from("Shutdown stream"));
